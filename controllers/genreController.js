@@ -29,7 +29,7 @@ exports.genre_detail = function(req, res, next) {
     if (err) { return next(err) }
     if (results.genre==null) {
       // There are no results
-      var err = new Error('Genre not found');
+      const err = new Error('Genre not found');
       err.status = 404;
       return next(err);
     }
