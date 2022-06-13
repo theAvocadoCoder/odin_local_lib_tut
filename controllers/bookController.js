@@ -28,7 +28,7 @@ exports.index = function(req, res) {
 };
 
 // Display list of all books
-exports.book_list = function(req, res) {
+exports.book_list = function(req, res, next) {
   Book.find({}, 'title author')
     .sort({title: 1})
     .populate('author')
