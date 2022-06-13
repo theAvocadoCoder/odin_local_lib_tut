@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { DateTime } = require('luxon');
 
 const Schema = mongoose.Schema;
 
@@ -31,14 +32,22 @@ AuthorSchema
 AuthorSchema
 .virtual('lifespan')
 .get(function () {
-  const lifetime_string = '';
-  if (this.date_of_birth) {
-    lifetime_string = this.date_of_birth.getYear().toString();
-  }
+  let lifetime_string = '';
+
+  lifetime_string = this.date_of_birth
+    ? DateTime
+      .fromJSDate(this.date_of_birth)
+      .toLocaleString(DateTime.DATE_MED) 
+    : '';
+
   lifetime_string += ' - ';
-  if (this.date_of_death) {
-    lifetime_string += this.date_of_death.getYear();
-  }
+
+  lifetime_string += this.date_of_death
+    ? DateTime
+      .fromJSDate(this.date_of_death)
+      .toLocaleString(DateTime.DATE_MED)
+    : '';
+
   return lifetime_string;
 });
 
